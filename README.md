@@ -76,6 +76,32 @@ The model generates three key visualizations:
 2. **Confusion Matrices**: Comparison across XGBoost, CatBoost, and Ensemble
 3. **Threshold Visualization**: Precision-recall trade-off analysis
 
+### Model Comparison & Recommendation
+
+#### **⭐ Best Model: CatBoost**
+
+After evaluation, **CatBoost is the recommended model** for production deployment for the following reasons:
+
+**Why CatBoost Wins for Medical Applications:**
+- **Lowest False Negatives (FN)**: CatBoost achieves the minimum number of missed sepsis cases
+- **Critical for Healthcare**: Failing to detect sepsis in a neonate is life-threatening; false negatives are far more costly than false positives
+- **Superior Recall**: Highest sensitivity in identifying positive sepsis cases
+- **Native Categorical Handling**: Provides better feature representation compared to one-hot encoding
+- **Balanced Class Weight Strategy**: Its automatic class weight balancing aligns perfectly with clinical priorities
+
+**Performance Trade-off:**
+While CatBoost may have slightly higher false positives (unnecessary treatments) compared to XGBoost, this is clinically acceptable:
+- False Positive (unnecessary treatment) = Low clinical risk, manageable cost
+- False Negative (missed diagnosis) = Life-threatening, potentially fatal outcome
+
+**Deployment Recommendation:**
+Use **CatBoost with the 85% recall threshold** for:
+- Early screening at neonatal units
+- Risk stratification of newborns
+- Enhanced clinical decision support
+
+The ensemble approach can be used as a secondary validation step, but CatBoost should be the primary model for predictions.
+
 ### Usage
 
 #### Running the Model
