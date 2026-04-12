@@ -143,9 +143,3 @@ y_pred = (y_prob_ensemble >= optimal_threshold).astype(int)
 - Feature importance analysis
 - Model interpretability (SHAP values)
 - Threshold optimization per deployment context
-
-### Author Notes
-This model demonstrates the importance of:
-- Handling data leakage strictly in medical AI
-- Balancing model performance metrics with clinical objectives
-- Using ensemble methods for improved generalization
