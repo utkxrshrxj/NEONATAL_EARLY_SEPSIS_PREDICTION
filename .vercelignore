@@ -1,0 +1,10 @@
+venv/
+__pycache__/
+*.csv
+.DS_Store
+*.ipynb
+catboost_info/
+features.txt
+model1.py
+model2.py
+train_and_save.py

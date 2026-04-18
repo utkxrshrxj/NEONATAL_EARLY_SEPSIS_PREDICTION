@@ -86,9 +86,9 @@ def health_check():
 # Serve frontend static files
 import os
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-os.makedirs(frontend_path, exist_ok=True)
-app.mount("/static", StaticFiles(directory=frontend_path), name="static")
+if os.path.exists(frontend_path):
+    app.mount("/static", StaticFiles(directory=frontend_path), name="static")
 
-@app.get("/")
-def serve_index():
-    return FileResponse(os.path.join(frontend_path, "index.html"))
+    @app.get("/")
+    def serve_index():
+        return FileResponse(os.path.join(frontend_path, "index.html"))
