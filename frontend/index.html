@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neonatal Sepsis Predictor</title>
+    <meta name="description" content="AI Early Sepsis Detection derived from clinical at-birth features.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+    <!-- FontAwesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <!-- Background Elements -->
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <div class="app-container">
+        <!-- Landing Section -->
+        <section id="landing" class="screen active">
+            <div class="glass-panel landing-content">
+                <div class="icon-pulse">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                </div>
+                <h1>Neonatal Sepsis Predictor</h1>
+                <p class="subtitle">AI-driven early risk assessment using at-birth clinical factors.</p>
+                
+                <div class="features">
+                    <div class="feature">
+                        <i class="fa-solid fa-bolt"></i>
+                        <span>Early Detection</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-shield-halved"></i>
+                        <span>High Sensitivity</span>
+                    </div>
+                    <div class="feature">
+                        <i class="fa-solid fa-brain"></i>
+                        <span>CatBoost Ensemble</span>
+                    </div>
+                </div>
+
+                <button id="start-btn" class="btn btn-primary">
+                    Start Assessment <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- Prediction Form Section -->
+        <section id="assessment" class="screen">
+            <div class="glass-panel form-panel">
+                <button class="back-btn" onclick="showScreen('landing')">
+                    <i class="fa-solid fa-arrow-left"></i> Back
+                </button>
+                
+                <h2>Clinical Assessment</h2>
+                <p class="panel-desc">Enter the at-birth features below to evaluate early sepsis risk.</p>
+                
+                <form id="prediction-form">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Gestational Age (Weeks) <span class="req">*</span></label>
+                            <input type="number" step="0.1" id="gestational_age_weeks" required placeholder="e.g. 38.5">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Birth Weight (kg) <span class="req">*</span></label>
+                            <input type="number" step="0.01" id="birth_weight_kg" required placeholder="e.g. 3.2">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Maternal Age (Years) <span class="req">*</span></label>
+                            <input type="number" step="1" id="maternal_age" required placeholder="e.g. 28">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Apgar 1 min <span class="req">*</span></label>
+                            <input type="number" step="1" id="apgar_1min" required placeholder="e.g. 8">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Apgar 5 min <span class="req">*</span></label>
+                            <input type="number" step="1" id="apgar_5min" required placeholder="e.g. 9">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Delivery Mode <span class="req">*</span></label>
+                            <select id="delivery_mode" required>
+                                <option value="Vaginal">Vaginal</option>
+                                <option value="Cesarean">Cesarean</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <h3 class="subsection-title">Conditions & Flags</h3>
+                    <div class="checkbox-grid">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="low_birth_weight">
+                            <span class="custom-checkbox"></span>
+                            Low Birth Weight
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="very_low_birth_weight">
+                            <span class="custom-checkbox"></span>
+                            Very Low Birth Weight
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="young_mother">
+                            <span class="custom-checkbox"></span>
+                            Young Mother
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="prom">
+                            <span class="custom-checkbox"></span>
+                            PROM (> 18h)
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="maternal_infection">
+                            <span class="custom-checkbox"></span>
+                            Maternal Infection
+                        </label>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="resuscitation_needed">
+                            <span class="custom-checkbox"></span>
+                            Resuscitation Needed
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full" id="submit-btn">
+                        <span>Analyze Risk</span>
+                        <div class="loader" id="btn-loader" style="display: none;"></div>
+                    </button>
+                    <div id="form-error" class="error-text"></div>
+                </form>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results" class="screen">
+            <div class="glass-panel result-panel">
+                <div id="risk-badge" class="risk-badge">
+                    <i class="fa-solid" id="risk-icon"></i>
+                </div>
+                
+                <h2 id="risk-status">Risk Assessment</h2>
+                
+                <div class="prob-container">
+                    <p class="prob-label">Overall Risk Probability</p>
+                    <div class="prob-bar-bg">
+                        <div class="prob-bar-fill" id="prob-fill"></div>
+                    </div>
+                    <p class="prob-value" id="prob-percentage">--%</p>
+                </div>
+
+                <div class="model-details">
+                    <p>Powered by CatBoost Algorithm</p>
+                    <p>Threshold for 85% Target Recall: <strong>40%</strong></p>
+                </div>
+
+                <p class="disclaimer">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    This tool is for clinical decision support only and should not replace clinical judgment.
+                </p>
+
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" onclick="showScreen('assessment')">Revise Data</button>
+                    <button class="btn btn-primary" onclick="resetApp()">New Patient</button>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script src="/static/app.js"></script>
+</body>
+</html>
