@@ -49,25 +49,18 @@ class PatientFeatures(BaseModel):
     apgar_5min: int
     resuscitation_needed: bool
 
-@app.post("/predict")
+@app.post("/api/predict")
 def predict_sepsis(features: PatientFeatures):
     if not cat_model:
         return {"error": "Models not loaded"}
         
-    # Convert input to DataFrame
     data = features.dict()
     df_raw = pd.DataFrame([data])
-    
-    # CatBoost preprocessing (handles categoricals natively)
     df_cat = df_raw.copy()
     
-    # Predict Probabilities
     prob_cat = cat_model.predict_proba(df_cat)[0][1]
-    
-    # CatBoost works well as primary predictor, we use its probability directly
     prob_ensemble = float(prob_cat) 
     
-    # Threshold for 85% Recall
     threshold = 0.4 
     is_high_risk = prob_ensemble >= threshold
     
@@ -79,16 +72,6 @@ def predict_sepsis(features: PatientFeatures):
         }
     }
 
-@app.get("/health")
+@app.get("/api/health")
 def health_check():
     return {"status": "ok", "models_loaded": (cat_model is not None)}
-
-# Serve frontend static files
-import os
-frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
-if os.path.exists(frontend_path):
-    app.mount("/static", StaticFiles(directory=frontend_path), name="static")
-
-    @app.get("/")
-    def serve_index():
-        return FileResponse(os.path.join(frontend_path, "index.html"))

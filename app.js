@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", () => {
         loader.style.display = "block";
 
         try {
-            const response = await fetch("/predict", {
+            const response = await fetch("/api/predict", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
