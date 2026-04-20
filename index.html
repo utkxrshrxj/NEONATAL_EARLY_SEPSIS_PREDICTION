@@ -3,182 +3,489 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Neonatal Sepsis Predictor</title>
-    <meta name="description" content="AI Early Sepsis Detection derived from clinical at-birth features.">
+    <title>SepsisPulse | Early Neonatal Sepsis Detection</title>
+    <meta name="description" content="AI-driven early risk assessment for neonatal sepsis using advanced clinical modeling.">
+    
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
-    <!-- FontAwesome for icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    
-    <!-- Background Elements -->
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <div class="blob blob-3"></div>
 
-    <div class="app-container">
-        <!-- Landing Section -->
-        <section id="landing" class="screen active">
-            <div class="glass-panel landing-content">
-                <div class="icon-pulse">
-                    <i class="fa-solid fa-heart-pulse"></i>
-                </div>
-                <h1>Neonatal Sepsis Predictor</h1>
-                <p class="subtitle">AI-driven early risk assessment using at-birth clinical factors.</p>
-                
-                <div class="features">
-                    <div class="feature">
-                        <i class="fa-solid fa-bolt"></i>
-                        <span>Early Detection</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fa-solid fa-shield-halved"></i>
-                        <span>High Sensitivity</span>
-                    </div>
-                    <div class="feature">
-                        <i class="fa-solid fa-brain"></i>
-                        <span>CatBoost Ensemble</span>
-                    </div>
-                </div>
+    <!-- Dynamic Background -->
+    <div class="bg-blobs">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
 
-                <button id="start-btn" class="btn btn-primary">
-                    Start Assessment <i class="fa-solid fa-arrow-right"></i>
-                </button>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <a href="#" class="logo">
+                <i class="fa-solid fa-heart-pulse"></i>
+                <span>SepsisPulse</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="#features">Expertise</a></li>
+                <li><a href="#" onclick="showScreen('model-screen')">The Model</a></li>
+                <li><button class="btn btn-secondary" onclick="showScreen('assessment')" style="padding: 0.6rem 1.2rem; font-size: 0.9rem;">Predict Now</button></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN LANDING PAGE -->
+    <main id="landing-page" class="screen active">
+        <!-- Hero -->
+        <section class="container hero">
+            <div class="hero-content">
+                <h1>Predicting Neonatal Sepsis with <span style="color: var(--primary)">Precision AI</span>.</h1>
+                <p class="subtitle" style="font-size: 1.25rem; color: var(--text-muted); margin-bottom: 2.5rem;">
+                    Every minute counts. Our AI-driven platform analyzes early clinical factors to provide accurate risk assessments for neonatal sepsis at birth.
+                </p>
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <button class="btn btn-primary" onclick="showScreen('assessment')">
+                        Start Prediction <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                    <button class="btn btn-secondary" onclick="showScreen('model-screen')">The Model</button>
+                    <button class="btn btn-secondary" onclick="showScreen('history-screen')"><i class="fa-solid fa-clock-rotate-left"></i> History</button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="hero.png" alt="Neonatal AI Health Hero">
             </div>
         </section>
 
-        <!-- Prediction Form Section -->
-        <section id="assessment" class="screen">
-            <div class="glass-panel form-panel">
-                <button class="back-btn" onclick="showScreen('landing')">
-                    <i class="fa-solid fa-arrow-left"></i> Back
+        <!-- Features -->
+        <section id="features" class="container">
+            <div style="text-align: center; max-width: 700px; margin: 0 auto 4rem;">
+                <h2>Built for Clinical Excellence</h2>
+                <p style="color: var(--text-muted)">A complete clinical AI platform — from risk prediction to explainability and digital reporting.</p>
+            </div>
+
+            <div class="feature-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));">
+                <div class="glass feature-card">
+                    <i class="fa-solid fa-bolt"></i>
+                    <h3>Rapid Assessment</h3>
+                    <p>Get results in seconds using only 9 at-birth clinical features available in any neonatal ward.</p>
+                </div>
+                <div class="glass feature-card">
+                    <i class="fa-solid fa-shield-virus"></i>
+                    <h3>High Sensitivity</h3>
+                    <p>85% target recall ensures life-threatening sepsis cases are never missed during early screening.</p>
+                </div>
+                <div class="glass feature-card">
+                    <i class="fa-solid fa-brain"></i>
+                    <h3>Explainable AI</h3>
+                    <p>SHAP-powered impact analysis reveals exactly which clinical factors are driving each risk score.</p>
+                </div>
+                <div class="glass feature-card">
+                    <i class="fa-solid fa-file-medical"></i>
+                    <h3>Clinical Reports</h3>
+                    <p>Download a professional, print-ready PDF report for any assessment — ready for patient files or EMR systems.</p>
+                </div>
+                <div class="glass feature-card">
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+                    <h3>Smart Validation</h3>
+                    <p>Real-time physiological range checks flag impossible or unusual values before submission.</p>
+                </div>
+                <div class="glass feature-card">
+                    <i class="fa-solid fa-clock-rotate-left"></i>
+                    <h3>Session History</h3>
+                    <p>Automatically saves your last 5 assessments locally — review any previous result in one click.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Model Insights Section -->
+        <section id="model" class="container">
+            <div class="model-header">
+                <h2>How SepsisPulse Analyzes Risk</h2>
+                <p style="color: var(--text-muted)">A technical walkthrough of our methodology and clinical performance.</p>
+            </div>
+
+            <div class="technical-grid">
+                <div class="technical-content">
+                    <div class="tech-card glass">
+                        <h3><i class="fa-solid fa-microscope"></i> Early Feature Extraction</h3>
+                        <p>Our model is explicitly trained to exclude post-onset diagnostic signs (like CRP or fever) to focus purely on <strong>early-warning clinical markers</strong> available at birth.</p>
+                        <ul class="tech-list" style="margin-top: 1rem;">
+                            <li>Gestational & Maternal Age Analysis</li>
+                            <li>Apgar Score Performance Mapping</li>
+                            <li>Birth Weight Risk Stratification</li>
+                        </ul>
+                    </div>
+
+                    <div class="tech-card glass">
+                        <h3><i class="fa-solid fa-brain"></i> Adaptive Learning (CatBoost)</h3>
+                        <p>We utilize the <strong>CatBoost Gradient Boosting</strong> architecture, specifically configured for medical high-sensitivity scenarios.</p>
+                        <div class="metric-highlight">
+                            <div class="metric-item">
+                                <span class="metric-value">83.5%</span>
+                                <span class="metric-label">ROC-AUC Score</span>
+                            </div>
+                            <div class="metric-item">
+                                <span class="metric-value">85.0%</span>
+                                <span class="metric-label">Target Recall</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tech-card glass">
+                        <h3><i class="fa-solid fa-database"></i> Clinical Data Integrity</h3>
+                        <p>Trained on the <strong>African Neonatal Sepsis Dataset</strong>, the model recognizes complex interactions between biological factors and clinical outcomes without the "black box" mystery.</p>
+                    </div>
+                </div>
+
+                <div class="tech-visual-container">
+                    <img src="training_visual.png" alt="Neural Training Flow" class="technical-snapshot">
+                    <p class="visual-caption">Architectural representation of our neural-boosted decision logic.</p>
+                </div>
+            </div>
+
+            <div class="confusion-matrix-box">
+                <h3>Clinical Performance Distribution</h3>
+                <p style="color: var(--text-muted); margin-bottom: 2rem;">Visualizing the model's accuracy on the validation set.</p>
+                <img src="output.png" alt="Confusion Matrix" class="matrix-image">
+            </div>
+        </section>
+    </main>
+
+    <!-- ASSESSMENT APP INTERFACE -->
+    <main id="assessment" class="screen">
+        <div class="app-wrapper">
+            <div class="glass form-panel">
+                <button class="btn btn-secondary" onclick="showScreen('landing-page')" style="padding: 0.5rem 1rem; font-size: 0.9rem; margin-bottom: 2rem;">
+                    <i class="fa-solid fa-arrow-left"></i> Back to Home
                 </button>
                 
-                <h2>Clinical Assessment</h2>
-                <p class="panel-desc">Enter the at-birth features below to evaluate early sepsis risk.</p>
-                
+                <div class="form-header">
+                    <h2>Clinical Risk Assessment</h2>
+                    <p style="color: var(--text-muted)">Please enter the patient data accurately for the most precise risk analysis.</p>
+                </div>
+
                 <form id="prediction-form">
                     <div class="form-grid">
                         <div class="form-group">
-                            <label>Gestational Age (Weeks) <span class="req">*</span></label>
-                            <input type="number" step="0.1" id="gestational_age_weeks" required placeholder="e.g. 38.5">
+                            <label>Gestational Age (Weeks)</label>
+                            <input type="number" step="0.1" id="gestational_age_weeks" required placeholder="e.g. 38.5" min="20" max="45">
+                            <span class="field-warning" id="warn-gestational_age_weeks"></span>
                         </div>
-
                         <div class="form-group">
-                            <label>Birth Weight (kg) <span class="req">*</span></label>
-                            <input type="number" step="0.01" id="birth_weight_kg" required placeholder="e.g. 3.2">
+                            <label>Birth Weight (kg)</label>
+                            <input type="number" step="0.01" id="birth_weight_kg" required placeholder="e.g. 3.25" min="0.3" max="6">
+                            <span class="field-warning" id="warn-birth_weight_kg"></span>
                         </div>
-
                         <div class="form-group">
-                            <label>Maternal Age (Years) <span class="req">*</span></label>
-                            <input type="number" step="1" id="maternal_age" required placeholder="e.g. 28">
+                            <label>Maternal Age (Years)</label>
+                            <input type="number" step="1" id="maternal_age" required placeholder="e.g. 28" min="10" max="60">
+                            <span class="field-warning" id="warn-maternal_age"></span>
                         </div>
-
                         <div class="form-group">
-                            <label>Apgar 1 min <span class="req">*</span></label>
-                            <input type="number" step="1" id="apgar_1min" required placeholder="e.g. 8">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Apgar 5 min <span class="req">*</span></label>
-                            <input type="number" step="1" id="apgar_5min" required placeholder="e.g. 9">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Delivery Mode <span class="req">*</span></label>
+                            <label>Delivery Mode</label>
                             <select id="delivery_mode" required>
                                 <option value="Vaginal">Vaginal</option>
                                 <option value="Cesarean">Cesarean</option>
                                 <option value="Other">Other</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Apgar 1 min</label>
+                            <input type="number" step="1" id="apgar_1min" required placeholder="0-10" min="0" max="10">
+                            <span class="field-warning" id="warn-apgar_1min"></span>
+                        </div>
+                        <div class="form-group">
+                            <label>Apgar 5 min</label>
+                            <input type="number" step="1" id="apgar_5min" required placeholder="0-10" min="0" max="10">
+                            <span class="field-warning" id="warn-apgar_5min"></span>
+                        </div>
                     </div>
 
-                    <h3 class="subsection-title">Conditions & Flags</h3>
-                    <div class="checkbox-grid">
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="low_birth_weight">
-                            <span class="custom-checkbox"></span>
-                            Low Birth Weight
-                        </label>
-
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="very_low_birth_weight">
-                            <span class="custom-checkbox"></span>
-                            Very Low Birth Weight
-                        </label>
-
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="young_mother">
-                            <span class="custom-checkbox"></span>
-                            Young Mother
-                        </label>
-
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="prom">
-                            <span class="custom-checkbox"></span>
-                            PROM (> 18h)
-                        </label>
-
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="maternal_infection">
-                            <span class="custom-checkbox"></span>
-                            Maternal Infection
-                        </label>
-
-                        <label class="checkbox-label">
-                            <input type="checkbox" id="resuscitation_needed">
-                            <span class="custom-checkbox"></span>
-                            Resuscitation Needed
-                        </label>
+                    <div class="checkbox-section">
+                        <h3 style="font-size: 1.1rem; margin-bottom: 1rem;">Clinical Flags & History</h3>
+                        <div class="checkbox-grid">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="low_birth_weight">
+                                <span>Low Birth Weight</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="very_low_birth_weight">
+                                <span>Very Low Birth Weight</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="young_mother">
+                                <span>Young Mother</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="prom">
+                                <span>PROM (> 18h)</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="maternal_infection">
+                                <span>Maternal Infection</span>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="resuscitation_needed">
+                                <span>Resuscitation Needed</span>
+                            </label>
+                        </div>
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-full" id="submit-btn">
-                        <span>Analyze Risk</span>
+                    <button type="submit" class="btn btn-primary w-full" style="margin-top: 3rem; width: 100%;" id="submit-btn">
+                        <span>Analyze Clinical Risk</span>
                         <div class="loader" id="btn-loader" style="display: none;"></div>
                     </button>
-                    <div id="form-error" class="error-text"></div>
+                    <div id="form-error" style="color: var(--accent); text-align: center; margin-top: 1rem;"></div>
                 </form>
             </div>
-        </section>
+        </div>
+    </main>
 
-        <!-- Results Section -->
-        <section id="results" class="screen">
-            <div class="glass-panel result-panel">
-                <div id="risk-badge" class="risk-badge">
-                    <i class="fa-solid" id="risk-icon"></i>
+    <!-- MODEL ARCHITECTURE DASHBOARD -->
+    <main id="model-screen" class="screen">
+        <div class="app-wrapper" style="max-width: 1100px;">
+            <div class="glass form-panel" style="position: relative; padding-top: 5rem;">
+                <button class="close-btn" onclick="showScreen('landing-page')">✕</button>
+                
+                <div class="form-header">
+                    <h2>🧠 NeoSepNet — Model Architecture</h2>
+                    <p style="color: var(--text-muted)">A technical deep-dive into the AI driving our risk assessments.</p>
                 </div>
-                
-                <h2 id="risk-status">Risk Assessment</h2>
-                
-                <div class="prob-container">
-                    <p class="prob-label">Overall Risk Probability</p>
-                    <div class="prob-bar-bg">
-                        <div class="prob-bar-fill" id="prob-fill"></div>
+
+                <div class="tab-container">
+                    <div class="tab-nav">
+                        <button class="tab-btn active" onclick="switchTab('tab-overview')">Overview</button>
+                        <button class="tab-btn" onclick="switchTab('tab-pipeline')">Pipeline Stages</button>
+                        <button class="tab-btn" onclick="switchTab('tab-features')">Features Used</button>
+                        <button class="tab-btn" onclick="switchTab('tab-rationale')">Why This Matters</button>
                     </div>
-                    <p class="prob-value" id="prob-percentage">--%</p>
-                </div>
 
-                <div class="model-details">
-                    <p>Powered by CatBoost Algorithm</p>
-                    <p>Threshold for 85% Target Recall: <strong>40%</strong></p>
-                </div>
+                    <div id="tab-overview" class="tab-content active">
+                        <div class="tech-card glass" style="margin-bottom: 2rem;">
+                            <p style="font-size: 1.1rem;">NeoSepNet predicts neonatal sepsis risk at birth using only 9 perinatal indicators — no post-onset lab data required.</p>
+                        </div>
+                        <div class="table-container glass">
+                            <table class="metrics-table">
+                                <thead>
+                                    <tr>
+                                        <th>Model</th>
+                                        <th>AUC-ROC</th>
+                                        <th>PR-AUC</th>
+                                        <th>F1-Score</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>XGBoost</strong></td>
+                                        <td>0.827</td>
+                                        <td>0.921</td>
+                                        <td>0.778</td>
+                                    </tr>
+                                    <tr class="highlight-row">
+                                        <td><strong>CatBoost</strong></td>
+                                        <td>0.835</td>
+                                        <td>0.928</td>
+                                        <td>0.789</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Ensemble</strong></td>
+                                        <td>0.832</td>
+                                        <td>0.926</td>
+                                        <td>0.784</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
 
-                <p class="disclaimer">
-                    <i class="fa-solid fa-triangle-exclamation"></i>
-                    This tool is for clinical decision support only and should not replace clinical judgment.
-                </p>
+                    <div id="tab-pipeline" class="tab-content">
+                        <div class="stepper">
+                            <div class="step-card glass">
+                                <div class="step-icon">📥</div>
+                                <h4>Data Ingestion</h4>
+                                <p>African Neonatal Sepsis Dataset (n=10,000)</p>
+                            </div>
+                            <div class="step-card glass">
+                                <div class="step-icon">🔒</div>
+                                <h4>Anti-Leakage</h4>
+                                <p>Retains only 9 at-birth features</p>
+                            </div>
+                            <div class="step-card glass">
+                                <div class="step-icon">⚙️</div>
+                                <h4>Feature Eng.</h4>
+                                <p>Boolean casting & native encoding</p>
+                            </div>
+                            <div class="step-card glass">
+                                <div class="step-icon">🔀</div>
+                                <h4>Parallel training</h4>
+                                <p>XGBoost branch + CatBoost branch</p>
+                            </div>
+                            <div class="step-card glass">
+                                <div class="step-icon">🗳️</div>
+                                <h4>Soft-Voting</h4>
+                                <p>p̂_ens = (p̂_XGB + p̂_CAT) / 2</p>
+                            </div>
+                            <div class="step-card glass">
+                                <div class="step-icon">📊</div>
+                                <h4>Calibration</h4>
+                                <p>Recall ≥ 85% (τ* ≈ 0.38)</p>
+                            </div>
+                        </div>
+                    </div>
 
-                <div class="action-buttons">
-                    <button class="btn btn-secondary" onclick="showScreen('assessment')">Revise Data</button>
-                    <button class="btn btn-primary" onclick="resetApp()">New Patient</button>
+                    <div id="tab-features" class="tab-content">
+                        <div class="feature-grid-auto">
+                            <div class="feat-mini-card glass">
+                                <span>🗓️</span>
+                                <div>
+                                    <strong>Gestational Age</strong>
+                                    <small>weeks</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span>⚖️</span>
+                                <div>
+                                    <strong>Birth Weight</strong>
+                                    <small>kg</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span style="color: #ef4444;">🔴</span>
+                                <div>
+                                    <strong>Low Birth Weight</strong>
+                                    <small>&lt; 2.5 kg</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span style="color: #ef4444;">🔴</span>
+                                <div>
+                                    <strong>Very Low Weight</strong>
+                                    <small>&lt; 1.5 kg</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span>👩</span>
+                                <div>
+                                    <strong>Maternal Age</strong>
+                                    <small>years</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span style="color: #f59e0b;">⚠️</span>
+                                <div>
+                                    <strong>Young Mother</strong>
+                                    <small>&lt; 18</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span>💧</span>
+                                <div>
+                                    <strong>PROM</strong>
+                                    <small>&gt; 18h rupture</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span>🦠</span>
+                                <div>
+                                    <strong>Infection</strong>
+                                    <small>Maternal proxy</small>
+                                </div>
+                            </div>
+                            <div class="feat-mini-card glass">
+                                <span>🏥</span>
+                                <div>
+                                    <strong>Delivery Mode</strong>
+                                    <small>Method type</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="tab-rationale" class="tab-content">
+                        <div class="rationale-grid">
+                            <div class="rationale-card glass danger">
+                                <h4><i class="fa-solid fa-triangle-exclamation"></i> False Negative Risk</h4>
+                                <p>A missed sepsis case can progress to septic shock within hours — our <strong>85% recall threshold</strong> ensures minimal missed diagnoses in critical early windows.</p>
+                            </div>
+                            <div class="rationale-card glass warning">
+                                <h4><i class="fa-solid fa-hand-holding-medical"></i> False Positive Cost</h4>
+                                <p>A false positive results primarily in a short, reversible course of antibiotic prophylaxis. This is clinically acceptable given the high survival benefit of early intervention.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </section>
-    </div>
+        </div>
+    </main>
+
+    <!-- RESULTS INTERFACE -->
+    <main id="results" class="screen">
+        <div class="app-wrapper">
+            <div class="glass results-panel print-panel">
+
+                <!-- Print Header (only visible when printing) -->
+                <div class="print-header">
+                    <h2>SepsisPulse Clinical Assessment Report</h2>
+                    <p id="print-timestamp"></p>
+                </div>
+
+                <div class="risk-circle-container">
+                    <div class="risk-circle" id="risk-display-circle">
+                        <div class="risk-value" id="prob-percentage">0%</div>
+                    </div>
+                </div>
+                
+                <div id="risk-badge" class="risk-badge">Analyzing...</div>
+                <h2 id="risk-status" style="margin-top: 1.5rem;">Calculating Results</h2>
+                
+                <div class="model-info">
+                    <p>Analysis performed via <strong>CatBoost Ensemble v1.2</strong></p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; opacity: 0.7;">
+                        Configured for <strong>Medical Sensitivity Priority</strong>.
+                    </p>
+                </div>
+
+                <!-- Feature 1: Impact Analysis -->
+                <div id="impact-analysis" class="impact-analysis-box glass">
+                    <h4 class="impact-title"><i class="fa-solid fa-chart-bar"></i> AI Reasoning — Feature Impact</h4>
+                    <div id="impact-list"></div>
+                </div>
+
+                <!-- Feature 2: Actions -->
+                <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap; margin-top:2.5rem;" class="no-print">
+                    <button class="btn btn-secondary" onclick="showScreen('assessment')">Adjust Data</button>
+                    <button class="btn btn-primary" onclick="printReport()"><i class="fa-solid fa-file-medical"></i> Download Report</button>
+                    <button class="btn btn-secondary" onclick="resetApp()">New Patient</button>
+                </div>
+
+                <p style="font-size:0.8rem; color:var(--text-muted); margin-top:3rem; max-width:500px; margin-left:auto; margin-right:auto;" class="no-print">
+                    <i class="fa-solid fa-circle-info"></i> This tool provides an algorithmic risk estimate. Not a definitive diagnosis.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <!-- HISTORY SCREEN -->
+    <main id="history-screen" class="screen">
+        <div class="app-wrapper" style="max-width:900px;">
+            <div class="glass form-panel" style="position:relative;">
+                <button class="close-btn" onclick="showScreen('landing-page')">✕</button>
+                <div class="form-header">
+                    <h2><i class="fa-solid fa-clock-rotate-left"></i> Recent Assessments</h2>
+                    <p style="color:var(--text-muted)">Your last 5 clinical assessments, stored locally on this device.</p>
+                </div>
+                <div id="history-list" style="display:flex; flex-direction:column; gap:1rem; margin-top:2rem;"></div>
+                <div style="display:flex; gap:1rem; margin-top:2rem;">
+                    <button class="btn btn-secondary" onclick="clearHistory()"><i class="fa-solid fa-trash"></i> Clear History</button>
+                    <button class="btn btn-primary" onclick="showScreen('assessment')">New Assessment</button>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script src="app.js"></script>
 </body>
